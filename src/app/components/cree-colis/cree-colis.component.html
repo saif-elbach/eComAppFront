@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ecommApp</title>
+</head> 
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <app-nav></app-nav>
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle" (click)="toggleMenu()">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="user">
+                    <ion-icon name="print-outline"></ion-icon>
+                </div>
+            </div>
+
+            <!-- ======================= filtration ================== -->
+            <div class="details2">
+                <div class="recentOrders2">
+                    <div class="success" *ngIf="validateRequest">
+                        ajouté avec succès !
+                      </div> 
+                    <form #CreerColisForm="ngForm" (ngSubmit)="creerColis(CreerColisForm.value)">
+                        <div class="cardHeader2">
+                            <div class="input-group">
+                                <label for="dateCreation">Date (*)</label>
+                                <input type="date" id="dateCreation" name="dateCreation" ngModel>
+                            </div>
+                            <div class="input-group">
+                                <label for="prix">PRIX (*)</label>
+                                <input type="number" id="prix" name="prix" ngModel>
+                            </div>
+                            <div class="input-group">
+                                <label for="numeroPortable">NUMERO PORTABLE (*)</label>
+                                <input type="number" id="numeroPortable" name="numeroPortable" ngModel>
+                            </div>
+                            <div class="input-group">
+                                <label for="nomComplet">NOM ET PRENENT (*)</label>
+                                <input type="text" id="nomComplet" name="nomComplet" ngModel>
+                            </div>
+                            <div class="input-group">
+                                <label for="adresse">ADRESSE (*)</label>
+                                <input type="text" id="adresse" name="adresse" ngModel>
+                            </div>
+                            <div class="input-group">
+                                <label for="date4">GOUVERNORAT (*)</label>
+                                <select name="gouvernorat" ngModel>
+                                    <option>-</option>
+                                    <option *ngFor="let g of gouvernorats">{{g}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="notes">NOTE</label>
+                                <input type="text" id="notes" name="notes" ngModel>
+                            </div>
+                            <div class="input-group">
+                                <label for="nomProduit">PRODUIT (*)</label>
+                                <select name="nomProduit" ngModel>
+                                    <option>-</option>
+                                    <option *ngFor="let g of mySecondProd">{{g.nomArticle}}</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="livreur">LIVREUR</label>
+                                <select name="livreur" ngModel>
+                                    <option>-</option>
+                                    <option *ngFor="let g of livreurs">{{g}}</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="etat">ETAT (*)</label>
+                                <input type="text" id="etat" name="etat" ngModel value="EN COURS" placeholder="EN COURS" disabled>
+                            </div>
+                            
+                            <div class="submit-button">
+                                <input type="submit" value="CREER COLIS" class="btn">
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

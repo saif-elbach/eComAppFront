@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ecommApp</title>
+</head> 
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <app-nav></app-nav>
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle" (click)="toggleMenu()">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="cherche ici">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <img src="assets\unnamed (1).jpg" alt="">
+                </div>
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+                <div class="card">
+                    <div>
+                        <div class="numbers">23</div>
+                        <div class="cardName">Stock</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="server-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers">80</div>
+                        <div class="cardName">Quantité vendu</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="bar-chart-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers">2</div>
+                        <div class="cardName">Livreur</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="car-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers">432</div>
+                        <div class="cardName">Revenus 'TND'</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="cash-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================ Order Details List ================= -->
+            <div class="details">
+                <!-- *ngIf="validateRequest" -->
+                <div class="recentOrders">
+                    <div class="success" *ngIf="validateRequest">
+                        ajouté avec succès !
+                      </div>                      
+                    <div class="cardHeader">
+                        <h2>INFORMATIONS UNITAIRE SUR LES ARTICLES</h2>
+                        <!-- <button type="submit" class="btn" style="background-color: red;">Telecharger en PDF</button> -->
+                    </div>
+                    <div class="cardHeader">
+                        <h5 style="color: red;">NB : Tous les chiffres sont unitaires et en dinars</h5>
+                        <!-- <button type="submit" class="btn" style="background-color: red;">Telecharger en PDF</button> -->
+                    </div>
+                    
+                    <br>
+                    <button type="submit" class="btn0"><a [routerLink]="['/dashboard-gc']">Retour</a></button>
+                    <button type="submit" class="btn" (click)="showPopupCrea()">Ajouter une Ligne</button>
+                    <br>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>ID PRODUIT DETAIL</td>
+                                <td>ARTICLE</td>
+                                <td>COUT ACHAT</td>
+                                <td>COUT LIVRAISON</td>
+                                <td>COUT COM</td>
+                                <td>PRIX SANS LIVRAISON</td>
+                                <td>PRIX VENTE</td>
+                                <td>REVENUE</td>
+                                <td>ACTION</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let p of mySecondProd">
+                                <td>{{p.idProdDetail}}</td>
+                                <td>{{p.nomArticle}}</td>
+                                <td>{{p.coutAchatUnitaire}}</td>
+                                <td>{{p.coutLivraison}}</td>
+                                <td>{{p.coutUnitaireCom}}</td>
+                                <td>{{p.prixSansLivraison}}</td>
+                                <td>{{p.prixVente}}</td>
+                                <td>{{p.revenueUnitaire}}</td>
+                                <!-- <td><span class="status inProgress">En cours</span></td>
+                                <td><span class="status delivered">Livré</span></td>
+                                <td><span class="status pending">en attente</span></td>
+                                <td><span class="status return">Retour</span></td> -->
+                                <td>
+                                    <button type="button" class="btn1" (click)="showPopupUpd(p)">modifier</button><br>
+                                    <button type="button" class="btn2" (click)="showPopup(p)" disabled>supprimer</button><br>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- popup delete -->
+<div class="popupDel" #popupDel>
+    <div class="popup-content">
+        <form>
+            <h1>êtes-vous sûr de vouloir supprimer cette Ligne !</h1><br><br>
+            <img src="assets\75519.png" alt="" class="close" (click)="hidePopup()">
+            <a class="button22" (click)="deleteRequestAppoint()">supprimer</a>
+            <a class="button2" (click)="hidePopup()">annuler</a>
+        </form>
+    </div>
+</div>
+
+    <!-- popup create -->       
+    <div class="popupCrea" #popupCrea>
+        <div class="popup-contentCrea">
+            <form #productForm="ngForm" (ngSubmit)="addProdDetail(productForm.value)">           
+                <h1>AJOUTER UNE LIGNE</h1><br>
+
+                <input type="text" name="nomArticle" placeholder="nom Article" ngModel><br>
+                <input type="number" name="coutAchatUnitaire" placeholder="cout Achat Unitaire" ngModel><br>
+                <input type="number" name="prixVente" placeholder="prix Vente" ngModel><br>
+                <input type="number" name="coutLivraison" placeholder="cout Livraison" ngModel><br>
+                <input type="number" name="coutUnitaireCom" placeholder="cout Unitaire Com" ngModel><br>
+                
+                <img src="assets\75519.png" alt="" class="closeCrea" (click)="hidePopupCrea()">
+                <br><br>
+                <button class="button2Crea" type="submit">VALIDER</button>
+                <a class="button2Crea" (click)="hidePopupCrea()">ANNULER</a>
+            </form>
+        </div>
+    </div>
+
+
+        <!-- popup update -->
+        <div class="popupUpd" #popupUpd>
+            <div class="popup-contentUpd">
+                <form #productUptForm="ngForm" (ngSubmit)="getProdDetUpt(productUptForm.value)">
+                    <h1>MODIFIER UNE LIGNE</h1><br>
+                
+                    <input type="number" name="idProdDetail" ngModel style="pointer-events: none;background-color: #f0f0f0;"><br>
+                    <input type="text" name="nomArticle" placeholder="nom Article" ngModel><br>
+                    <input type="number" name="revenueUnitaire" placeholder="revenue Unitaire" ngModel style="pointer-events: none;background-color: #f0f0f0;"><br>
+                    <input type="number" name="coutAchatUnitaire" placeholder="cout Achat Unitaire" ngModel><br>
+                    <input type="number" name="prixVente" placeholder="prix Vente" ngModel><br>
+                    <input type="number" name="coutLivraison" placeholder="cout Livraison" ngModel><br>
+                    <input type="number" name="coutUnitaireCom" placeholder="cout Unitaire Com" ngModel><br>
+                    <input type="number" name="prixSansLivraison" placeholder="prix Sans Livraison" ngModel style="pointer-events: none;background-color: #f0f0f0;"><br>
+
+                    <img src="assets\75519.png" alt="" class="closeUpd" (click)="hidePopupUpd()">
+                    <br>
+                    <button class="button2Crea" type="submit">VALIDER</button>
+                    <a class="button2Upd" (click)="hidePopupUpd()">Annuler</a>
+                </form>
+            </div>
+        </div>
+
+        <!-- popup show plus data -->
+        <div class="popupPlus" #popupPlus>
+            <div class="popup-contentPlus">
+              <h1 style="color: #00215b;">PLUS DE DETAILLE</h1><br>
+              <h5 style="color: red;">TOUT LES PRIX SONT EN DINARS</h5><br>
+              <caption style="float: left;color: #00215b;">INFO PRODUIT GLOBALE</caption>
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th style="background-color: #fff7b7;color: #00215b;">ID PRODUIT</th>
+                    <th>Date</th>
+                    <th>Article</th>
+                    <th>Livreur</th>
+                    <th>Colis imprimé</th>
+                    <th>Colis payé</th>
+                    <th>Retour</th>
+                    <th>% Retour</th>
+                    <th>Com</th>
+                    <th>Coût d'achat</th>
+                    <th>Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ obj?.idProduit }}</td>
+                        <td>{{ obj?.mois }}</td>
+                        <td>{{ obj?.produitDetail?.nomArticle }}</td>
+                        <td>{{ obj?.societeLivraison }}</td>
+                        <td>{{ obj?.colisImprimer }}</td>
+                        <td>{{ obj?.colisPayer }}</td>
+                        <td>{{ obj?.retour }}</td>
+                        <td>{{ obj?.pourcentageRetour }}</td>
+                        <td>{{ obj?.com }}</td>
+                        <td>{{ obj?.coutAchat }}</td>
+                        <td>{{ obj?.revenue }}</td>
+                    </tr>
+                </tbody>
+              </table>
+              <caption style="float: left;color: #00215b;">INFO PRODUIT UNITAIRE</caption>
+                <table class="custom-table">
+                 <thead>
+                   <tr>
+
+                    <th style="background-color: #fff7b7;color: #00215b;">ID PRODUIT DETAILLE</th>
+                    <th>Cout d'achat unitaire</th>
+                    <th>Cout Livraison</th>
+                    <th>Cout Unitaire Com</th>
+                    <th>Prix Sans Livraison</th>
+                    <th>Prix Vente</th>
+                    <th>Revenue Unitaire</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                      <td>{{ obj?.produitDetail?.idProdDetail }}</td>
+                      <td>{{ obj?.produitDetail?.coutAchatUnitaire }}</td>
+                      <td>{{ obj?.produitDetail?.coutLivraison }}</td>
+                      <td>{{ obj?.produitDetail?.coutUnitaireCom }}</td>
+                      <td>{{ obj?.produitDetail?.prixSansLivraison }}</td>
+                      <td>{{ obj?.produitDetail?.prixVente }}</td>
+                      <td>{{ obj?.produitDetail?.revenueUnitaire }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <caption style="float: left;color: #00215b;">INFO CAISSE</caption>
+                <table class="custom-table">
+                    <thead>
+                      <tr>
+                       <th style="background-color: #fff7b7;color: #00215b;">ID CAISSE</th>
+                       <th>Article</th>
+                       <th>Revenue Totale</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                       <tr>
+                         <td>{{ obj?.caisse?.idCaisse }}</td>
+                         <td>{{ obj?.caisse?.productName }}</td>
+                         <td>{{ obj?.caisse?.revenueTotale }}</td>
+                       </tr>
+                     </tbody>
+                   </table>
+                <br><br><br>
+                <img src="assets\75519.png" alt="" class="closePlus" (click)="hidePopupPlus()">
+                <a class="custom-button" (click)="hidePopupPlus()">ANNULER</a>
+              </div>
+            </div>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

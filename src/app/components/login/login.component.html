@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Animated Login Form</title>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<img class="wave" src="assets\Web_Photo_Editor.png">
+	<div class="logedin" *ngIf="validate">
+		<h4>logged in <ion-icon name="checkmark-circle-outline"></ion-icon> </h4>
+	</div>
+	<div class="notLogedin" *ngIf="notValidate">
+		<h4>Try again <ion-icon name="close-circle-outline"></ion-icon> </h4>
+	</div>
+	<div class="container">
+		<div class="img">
+			<img src="assets/Left-Login-banner-img.png">
+		</div>
+		<div class="login-content">
+			<form action="login" method="post">
+				<img class="ava" src="assets\6606-male-user-512.png">
+				<h2 class="title">ADMIN</h2>
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="fas fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<input type="text" name="username" [(ngModel)]="username" class="input" placeholder="Username">
+           		   </div>
+           		</div>
+           		<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<input type="password" name="password" [(ngModel)]="password" class="input" placeholder="Password">
+            	   </div>
+            	</div>
+				<br>
+				<input class="btn" type="submit" name="Login" value="Login" (click)="doLogin()">
+				<!-- <a [routerLink]="['/app-acceuil']"><input type="submit" class="btn" value="Login"></a> -->
+            	
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

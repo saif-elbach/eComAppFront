@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+  <html lang="en">
+  
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="Content-Language" content="en">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>Dropship</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+      <meta name="msapplication-tap-highlight" content="no">
+  </head>
+  <body>
+    <style type="text/css">
+
+    </style>
+    <div class="">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 m-auto">
+                        <div class="card" style="border: 1px solid #555; margin-bottom: 0.5cm; box-shadow: none;">
+                <div class="card-body py-2" style=" height: 13.5cm !important;">
+                  <h3 style="text-align: center;">
+                    <strong>Bon de livraison N°: 
+                      BL-<span style="color: #EF6A0F;">11001100</span>
+                    </strong>
+                  </h3>
+                  <div class="row">
+                    <div class="col-md-6 m-auto" style="width: 50%">
+                      <div class="text-center">
+                        <img style="width: 250px; height: 50px" alt="619990717280" src="assets\barcode.png">                      
+                    </div>
+                      <div class="devvv">
+                        <div class="devv">Coordonnée destinataire</div>
+                        <br> Nom & Prénom  : {{printedColis.nomComplet}} <br><br>
+                        <!-- Téléphone : 97756010 - 0<br> -->
+                        Adresse : {{printedColis.adresse}}<br><br>
+                        Gouvernorat : {{printedColis.gouvernorat}} - 0<br>
+                      </div>
+                    </div>
+                    <div class="col-md-6 m-auto" style="width: 50%">
+                      <div class="devvv">
+                        <div class="devv">Transporteur : Droppex</div>
+                        Société De Livraison De Colis<br>
+                        RC : B09153332017<br>
+                        Patente : 1524456/Z/A/M/000<br>
+                        Adresse : 4001 Rue Hedi Nouira, Sousse, Tunisie.<br>
+                      </div>
+                      <div class="devvv">
+                      <div class="devv">Coordonnées expediteur</div>
+                        Nom : {{printedColis.nomProduit}}<br>
+                        
+                      </div>
+                      <br><br><br><br>
+                    </div>
+                    
+                    <table style="width: 100%">
+                      <thead>
+                        <tr style="border: 2px solid #EF6A0F;">  
+                          <th style="border: 2px solid #EF6A0F;">Référence</th>
+                          <th style="border: 2px solid #EF6A0F; width: 250px">Remarque</th>
+                          <th style="border: 2px solid #EF6A0F;">Date creation</th>
+                          <th style="border: 2px solid #EF6A0F;">P.U.</th>
+                          <th style="border: 2px solid #EF6A0F;">Quantité</th>
+                          <th style="border: 2px solid #EF6A0F;">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr style="border: 2px solid #EF6A0F;">
+                          <td style="border: 2px solid #EF6A0F; color: #EF6A0F; font-size: 17px; font-weight: bold;">619990717280</td>
+                          <td style="border: 2px solid #EF6A0F;"></td>
+                          <td style="border: 2px solid #EF6A0F;">{{printedColis.dateCreation}}</td>
+                          <td style="border: 2px solid #EF6A0F;">-</td>                                              
+                          <td style="border: 2px solid #EF6A0F;">-</td>                                            
+                          <td style="border: 2px solid #EF6A0F;">-</td>                                              
+                        </tr>  
+                        <tr>
+                          <td colspan="4" style="padding-top: 1%;">Nombre de tentative: 
+                            <span style="border: 3px solid #EF6A0F; padding: 0 9px; margin: 0 1%;"></span>
+                            <span style="border: 3px solid #EF6A0F; padding: 0 9px; margin: 0 1%;"></span>
+                            <span style="border: 3px solid #EF6A0F; padding: 0 9px; margin: 0 1%;"></span>
+                          </td>                                           
+                          <td style="border: 2px solid #EF6A0F; text-align: right;">Total</td>                                            
+                          <td style="border: 2px solid #EF6A0F;">-</td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" style="text-align: left;"><b>Cachet obligatoire :</b></td>
+                          <td style="border: 2px solid #EF6A0F; text-align: right;">TVA</td>                                            
+                          <td style="border: 2px solid #EF6A0F;">-</td>                                            
+                        </tr> 
+                        <tr >
+                          <td colspan="4" style="text-align: center;"><b>هذه الشركة لا تتحمل مسؤولية التكسير</b></td>
+                          <td style="border: 2px solid #EF6A0F;font-size: 25px; text-align: right; background-color: #efefef;">Total</td>
+                          <td style="border: 2px solid #EF6A0F;font-size: 25px; background-color: #efefef;"><b>{{printedColis.prix}}</b></td>               
+                        </tr>
+                        <tr class="text-center">
+                          <td colspan="6" style="font-size: 13px"><b><u>NB: CECI N'EST PAS UNE FACTRUE - LIVRAISON TRAITÉ DANS LES 24HRS, 48HRS SI POSSIBLE</u></b></td>
+                        </tr>                                           
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+                      </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>

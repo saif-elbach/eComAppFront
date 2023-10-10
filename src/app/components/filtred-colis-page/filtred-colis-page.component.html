@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ecommApp</title>
+</head> 
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <app-nav></app-nav>
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle" (click)="toggleMenu()">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+            </div>
+ 
+            <!-- ======================= filtration ================== -->
+            <div class="details2">
+                <!-- *ngIf="validateRequest" -->
+                <div class="recentOrders2">                     
+                    <div class="cardHeader2">
+                        <h4>DEPUIS</h4>
+                        <input type="date" name="date" id="" [(ngModel)]="startDate">
+                        <h4>JUSQU'A</h4>
+                        <input type="date" name="date" id="" [(ngModel)]="endDate">
+                        <button class="btn" type="submit" (click)="applyDateFilter()">APPLIQUÉ</button>
+                        <button class="btn" style="background-color: rgb(0, 169, 0);margin-left: 10px;"><a routerLink="/app-acceuil" style="text-decoration: none;color: white;">RETOUR</a></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ================ Order Details List ================= -->
+            <div class="details">
+                <!-- *ngIf="validateRequest" -->
+                <div class="recentOrders">
+                    <div class="success" *ngIf="validateRequest">
+                        ajouté avec succès !
+                      </div>                      
+                    <div class="cardHeader">
+                        <h2>COMMANDES FILTRÉS</h2>
+                        <button  class="btn" style="background-color: rgb(243, 6, 6);" (click)="makePdf()">LISTE AMIR</button>
+                        <button  class="btn" style="background-color: rgb(30, 166, 48);" (click)="downloadCsvFile()">EXCEL</button>
+                    </div>
+                    <br>
+                    <h4 *ngIf="ss" style="color: rgb(0, 169, 0);">{{filteredOrders.length}} COLIS DISPONIBLES</h4>
+                <div id="content">
+                    <table *ngIf="ss" class="a">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>Date</td>
+                                <td>Article</td>
+                                <td>Client</td>
+                                <td>Adresse</td>
+                                <td>Gouvernorat</td>
+                                <td>Numero</td>
+                                <td>Prix</td>
+                                <td>Etat</td>
+                                <td>Livreur</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let p of filteredOrders; let i = index"> 
+                                <!-- myCreerColis -->
+                                <td><input type="checkbox" name="" id="" [(ngModel)]="p.selected"></td>
+                                <td>{{p.dateCreation}}</td>
+                                <td>{{p.nomProduit}}</td>
+                                <td>{{p.nomComplet}}</td>
+                                <td>{{p.adresse}}</td>
+                                <td>{{p.gouvernorat}}</td>
+                                <td>{{p.numeroPortable}}</td>
+                                <td>{{p.prix}}</td>
+                                <td>{{p.etat}}</td>
+                                <td>{{p.livreur}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- ***************************************  array for print  ************************************************* -->
+
+                <div id="content2" #selectedRowsContainer>
+                    <table  *ngIf="this.selectedOrders.length != 0" class="pdf-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Article</th>
+                                <th>Client</th>
+                                <th>Adresse</th>
+                                <th>Gouvernorat</th>
+                                <th>Numero</th>
+                                <th>Prix</th>
+                              </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let p of selectedOrders"> 
+                                <td>{{p.dateCreation}}</td>
+                                <td>{{p.nomProduit}}</td>
+                                <td>{{p.nomComplet}}</td>
+                                <td>{{p.adresse}}</td>
+                                <td>{{p.gouvernorat}}</td>
+                                <td>{{p.numeroPortable}}</td>
+                                <td>{{p.prix}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+              </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- popup delete -->
+<div class="popupDel" #popupDel>
+    <div class="popup-content">
+        <form>
+            <h1>êtes-vous sûr de vouloir supprimer cette Ligne !</h1><br><br>
+            <img src="assets\75519.png" alt="" class="close" (click)="hidePopup()">
+            <a class="button22" (click)="deleteColis()">supprimer</a>
+            <a class="button2" (click)="hidePopup()">annuler</a>
+        </form>
+    </div>
+</div>
+
+
+
+
+        <!-- popup update -->
+        <div class="popupUpd" #popupUpd>
+            <div class="popup-contentUpd">
+                <form #colisUptForm="ngForm" (ngSubmit)="UpdateColis(colisUptForm.value)">
+                        <h1>MODIFIER UNE LIGNE</h1><br>
+                    <input name="idCreerColis" type="number" placeholder="ID" ngModel style="pointer-events: none;background-color: #f0f0f0;"><br>
+                    <input name="dateCreation" type="date" placeholder="date" ngModel><br>
+                    <input name="nomComplet" type="text" placeholder="Nom Client" ngModel><br>
+                    <input name="adresse" type="text" placeholder="Adresse" ngModel><br>
+                    <input name="numeroPortable" type="number" placeholder="Numero Portable" ngModel><br>
+                    <input name="prix" type="number" placeholder="Prix" ngModel><br>
+                    <input name="notes" type="text" placeholder="Notes" ngModel><br>
+
+                    <div>
+                        <label for="etat">ETAT</label>
+                        <select name="etat" ngModel>
+                            <option *ngFor="let s of etat" value="{{s}}">{{s}}</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="gouvernorat">Gouvernorat</label>
+                        <select name="gouvernorat" ngModel>
+                            <option>-</option>
+                            <option *ngFor="let g of gouvernorats">{{g}}</option>
+                        </select>
+                    </div>
+                        
+                    <div>
+                        <label for="nomProduit">Produit</label>
+                        <select name="nomProduit" ngModel>
+                            <option>-</option>
+                            <option *ngFor="let g of mySecondProd">{{g.nomArticle}}</option>
+                        </select>
+                    </div>
+
+                        <img src="assets\75519.png" alt="" class="closeUpd" (click)="hidePopupUpd()">
+                        
+                        <button class="button2Crea" type="submit">VALIDER</button>
+                        <a class="button2Upd" (click)="hidePopupUpd()">Annuler</a>
+                </form>
+            </div>
+        </div>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ecommApp</title>
+</head> 
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <app-nav></app-nav>
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle" (click)="toggleMenu()">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+
+                <div class="user">
+                    <img src="assets\unnamed (1).jpg" alt="">
+                </div>
+            </div>
+
+
+
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+                <div class="card9">
+                    <div>
+                        <div class="numbers">{{myColisPaye}}</div>
+                        <div class="cardName">TT COLIS PAYÉ</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="shield-checkmark-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card10">
+                    <div>
+                        <div class="numbers">{{myColisImprime}}</div>
+                        <div class="cardName">TT COLIS IMPRIMÉ</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="print-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card11">
+                    <div>
+                        <div class="numbers">{{myTotalRetour}}</div>
+                        <div class="cardName">TT RETOUR</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="sync-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card12">
+                    <div>
+                        <div class="numbers">{{myTotalCom}}</div>
+                        <div class="cardName">TT COM</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="logo-facebook"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+                <div class="card1">
+                    <div>
+                        <div class="numbers">{{myTotalCoutAchat}}</div>
+                        <div class="cardName">TT COUT D'ACHAT</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="card-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card2">
+                    <div>
+                        <div class="numbers">{{myRevenueTotal}}</div>
+                        <div class="cardName">TT REVENUE</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="logo-usd"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card5">
+                    <div>
+                        <div class="numbers">{{myTotalDepence}}</div>
+                        <div class="cardName">TT DÉPENCES</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="cash-outline"></ion-icon>
+                    </div>
+                </div>
+                
+                <div class="card3">
+                    <div>
+                        <div class="numbers">{{myNbrArticle}}</div>
+                        <div class="cardName">NOMBRE ARTICLE</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="albums-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+
+                <div class="card4">
+                    <div>
+                        <div class="numbers">{{paye.length}}</div>
+                        <div class="cardName">PAYÉ</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="cash-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card6">
+                    <div>
+                        <div class="numbers">{{livree.length}}</div>
+                        <div class="cardName">LIVRÉ</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="bag-check-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card7">
+                    <div>
+                        <div class="numbers">{{enCours.length}}</div>
+                        <div class="cardName">EN COURS</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="bicycle-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card8">
+                    <div>
+                        <div class="numbers">{{annuler.length}}</div>
+                        <div class="cardName">ANNULER</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="backspace-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+                        <!-- ======================= filtration ================== -->
+                        <div class="details2">
+                            <!-- *ngIf="validateRequest" -->
+                            <div class="recentOrders2">                     
+                                <div class="cardHeader2">
+                                    <h4 style="margin-top: 22px;">DEPUIS</h4>
+                                    <input type="date" name="date" disabled>
+                                    <h4 style="margin-top: 22px;">JUSQU'A</h4>
+                                    <input type="date" name="date" disabled>
+                                    <button class="btn" ><a routerLink="/app-filtred-colis-page" style="text-decoration: none;color: white;">FILTRER</a></button>
+                                </div>
+                            </div>
+                        </div>
+
+            <!-- ================ Order Details List ================= -->
+            <div class="details">
+                <!-- *ngIf="validateRequest" -->
+                <div class="recentOrders">
+                    <div class="success" *ngIf="validateRequest">
+                        ajouté avec succès !
+                      </div>                      
+                    <div class="cardHeader">
+                        <h2>COMMANDES</h2>
+                        
+                        <!-- <button type="submit" class="btn" style="background-color: red;">Telecharger en PDF</button> -->
+                    </div>
+                    <div class="search2">
+                        <label>
+                            <input type="text" placeholder="livreur,article,numero,etat " [(ngModel)]="filterText">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </label>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>Imprimer</td>
+                                <td>Livreur</td>
+                                <td>Date</td>
+                                <td>Article</td>
+                                <td>Client</td>
+                                <td>Adresse</td>
+                                <td>Gouvernorat</td>
+                                <td>Numero</td>
+                                <td>Prix</td>
+                                <td>Etat</td>
+                                <td>Note</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let p of pageSlice"> 
+                                <!-- myCreerColis -->
+                                <td style="color: red;">{{p.imprimer}}</td>
+                                <td style="text-align: center;"><a class="btn22" (click)="navigateToImprimerBrdr(p)"><ion-icon name="print-outline"></ion-icon></a><br></td>
+                                <td [style.backgroundColor]="getBackgroundColor(p)" style="color: white; text-align: center;">{{p.livreur}}</td>
+                                <td>{{p.dateCreation}}</td>
+                                <td>{{p.nomProduit}}</td>
+                                <td>{{p.nomComplet}}</td>
+                                <td>{{p.adresse}}</td>
+                                <td>{{p.gouvernorat}}</td>
+                                <td>{{p.numeroPortable}}</td>
+                                <td>{{p.prix}}</td>
+                                <td>{{p.etat}}</td>
+                                <td>{{p.notes}}</td>
+                                <!-- <td><span class="status inProgress">En cours</span></td>
+                                <td><span class="status delivered">Livré</span></td>
+                                <td><span class="status pending">en attente</span></td>
+                                <td><span class="status return">Retour</span></td> -->
+                                <td>
+                                    <button type="button" class="btn1" (click)="showPopupUpd(p)">Modifier</button><br>
+                                    <button type="button" class="btn2" (click)="showPopup(p.idCreerColis)">Supprimer</button><br>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <mat-paginator 
+                    [length]="myCreerColis.length" 
+                    [pageSize]="6" 
+                    (page)="onPageChange($event)">
+                    </mat-paginator>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- popup delete -->
+<div class="popupDel" #popupDel>
+    <div class="popup-content">
+        <form>
+            <h1>êtes-vous sûr de vouloir supprimer cette Ligne !</h1><br>
+            <img src="assets\75519.png" alt="" class="close" (click)="hidePopup()">
+            <a class="button22" (click)="deleteColis()">supprimer</a>
+            <a class="button2" (click)="hidePopup()">annuler</a>
+        </form>
+    </div>
+</div>
+
+
+
+
+        <!-- popup update -->
+        <div class="popupUpd" #popupUpd>
+            <div class="popup-contentUpd">
+                <form #colisUptForm="ngForm" (ngSubmit)="UpdateColis(colisUptForm.value)">
+                        <h1>MODIFIER UNE LIGNE</h1><br>
+                    <input name="idCreerColis" type="number" placeholder="ID" ngModel style="pointer-events: none;background-color: #f0f0f0;"><br>
+                    <input name="dateCreation" type="date" placeholder="date" ngModel><br>
+                    <input name="nomComplet" type="text" placeholder="Nom Client" ngModel><br>
+                    <input name="adresse" type="text" placeholder="Adresse" ngModel><br>
+                    <input name="numeroPortable" type="number" placeholder="Numero Portable" ngModel><br>
+                    <input name="prix" type="number" placeholder="Prix" ngModel><br>
+                    <input name="notes" type="text" placeholder="Notes" ngModel><br>
+
+                    <div class="seperatedSelect">
+                        <label for="etat">Etat</label>
+                        <select name="etat" ngModel>
+                            <option *ngFor="let s of etat">{{s}}</option>
+                        </select>
+
+                        <label for="livreur">livreur</label>
+                        <select name="livreur" ngModel>
+                            <option *ngFor="let s of livreur">{{s}}</option>
+                        </select>
+                    </div>
+
+
+
+                    <div class="seperatedSelect">
+                        <label for="gouvernorat">Gouvernorat</label>
+                        <select name="gouvernorat" ngModel>
+                            <option>-</option>
+                            <option *ngFor="let g of gouvernorats">{{g}}</option>
+                        </select>
+
+                        <label for="nomProduit">Produit</label>
+                        <select name="nomProduit" ngModel>
+                            <option>-</option>
+                            <option *ngFor="let g of mySecondProd">{{g.nomArticle}}</option>
+                        </select>
+                    </div>
+
+                        <img src="assets\75519.png" alt="" class="closeUpd" (click)="hidePopupUpd()">
+                        
+                        <button class="button2Crea" type="submit">VALIDER</button>
+                        <a class="button2Upd" (click)="hidePopupUpd()">Annuler</a>
+                </form>
+            </div>
+        </div>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

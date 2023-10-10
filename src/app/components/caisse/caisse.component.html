@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ecommApp</title>
+</head> 
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <app-nav></app-nav>
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle" (click)="toggleMenu()">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+
+                <div class="user">
+                    <img src="assets\unnamed (1).jpg" alt="">
+                </div>
+            </div>
+
+            <div class="details">
+                <div class="recentOrders">
+                    <div class="success" *ngIf="validateRequest">
+                        ajouté avec succès !
+                      </div>   
+                    <div class="cardHeader">
+                        <h2>CAISSE GENERALE</h2>
+                        <button type="submit" class="btn" style="background-color: rgb(2, 132, 232);" (click)="showPopupCrea()">AJOUTER UNE CAISSE</button>
+                        <!-- <button type="submit" class="btn" style="background-color: red;">Telecharger en PDF</button> -->
+                    </div>
+                    <br>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>ID Caisse</td>
+                                <td>Article</td>
+                                <td>Revenue Total 'TND'</td>
+                                <td>Action</td>                         
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let i of maCaisse">
+                                <td>{{i.idCaisse}}</td>
+                                <td>{{i.productName}}</td>
+                                <td>{{i.revenueTotale}}</td>
+                                <!-- <td><span class="status inProgress">yenja7</span></td> -->
+                                <td>
+                                    <button type="button" class="btn1" (click)="showPopupUpd(i)">modifier</button><br>
+                                    <button type="button" class="btn2" (click)="showPopup(i.idCaisse)">supprimer</button>
+                                </td>
+                            </tr>
+                            
+                           </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- popup delete -->
+<div class="popupDel" #popupDel>
+    <div class="popup-content">
+        <form>
+            <h1>êtes-vous sûr de vouloir supprimer cette caisse !</h1><br><br>
+            <img src="assets\75519.png" alt="" class="close" (click)="hidePopup()">
+            <a class="button22" (click)="deleteCaisse()">supprimer</a>
+            <a class="button2" (click)="hidePopup()">annuler</a>
+        </form>
+    </div>
+</div>
+
+    <!-- popup create -->
+    <div class="popupCrea" #popupCrea>
+        <div class="popup-contentCrea">
+            <form #caisseForm="ngForm" (ngSubmit)="addCaisse(caisseForm.value)">
+                <h1>AJOUTER UNE CAISSE</h1><br>
+                <input name="productName" type="text" placeholder="Nom de larticle" ngModel>
+                <br>
+                <img src="assets\75519.png" alt="" class="closeCrea" (click)="hidePopupCrea()">
+                <br>
+                <button class="button2Crea" type="submit">AJOUTER</button>
+                <a class="button2Crea" (click)="hidePopupCrea()">ANNULER</a>
+            </form>
+        </div>
+    </div>
+
+
+        <!-- popup update -->
+        <div class="popupUpd" #popupUpd>
+            <div class="popup-contentUpd">
+                <form #caisseUptForm="ngForm" (ngSubmit)="updateCaisse(caisseUptForm.value)">
+                    <h1>MODIFIER UNE CAISSE</h1><br>
+                    <label for="">ID</label>
+                    <input style="pointer-events: none;background-color: #f0f0f0;"  name="idCaisse" type="number" placeholder="ID caisse" ngModel>
+                    <br>
+                    <label for="">Article</label>
+                    <input name="productName" type="text" placeholder="Nom de larticle" ngModel>
+                    <br>
+                    <label for="">Revenue</label><br><label for="">Totale</label>
+                    <input name="revenueTotale" type="number" placeholder="revenue Totale" ngModel>
+                    <br>
+                    <img src="assets\75519.png" alt="" class="closeUpd" (click)="hidePopupUpd()">
+                    <br>
+                    <button class="button2Upd" type="submit">MODIFIER</button>
+                    <a class="button2Upd" (click)="hidePopupUpd()">ANNULER</a>
+                </form>
+            </div>
+        </div>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

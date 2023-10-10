@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ecommApp</title>
+</head> 
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <app-nav></app-nav>
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle" (click)="toggleMenu()">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+
+                <div class="user">
+                    <img src="assets\unnamed (1).jpg" alt="">
+                </div>
+            </div>
+
+            <div class="details">
+                <!-- *ngIf="validateRequest" -->
+                <div class="recentOrders">
+                    <div class="success" *ngIf="validateRequest">
+                        ajouté avec succès !
+                      </div>                      
+                    <div class="cardHeader">
+                        <h2>INFORMATIONS SUR LES ARTICLES</h2>
+                        <!-- <button type="submit" class="btn" style="background-color: red;">Telecharger en PDF</button> -->
+                    </div>
+                    
+                    <br>
+                    <button type="submit" class="btn0"><a [routerLink]="['/app-prod-detail']">Info unitaire</a></button>
+                    <button type="submit" class="btn" (click)="showPopupCrea()">Ajouter une Ligne</button>
+                    <br>
+                    <div class="search2">
+                        <label>
+                            <input type="text" placeholder="date,livreur,article " [(ngModel)]="filterText">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </label>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Date</td>
+                                <td>Article</td>
+                                <td>Livreur</td>
+                                <td>Colis imprimé</td>
+                                <td>Colis payé</td>
+                                <td>Retour</td>
+                                <td>% Retour</td>
+                                <td>Com 'TND'</td>
+                                <td>cout d'achat</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let p of pageSlice">
+                                <td>{{p.mois}}</td>
+                                <td>{{p.produitDetail.nomArticle}}</td>
+                                <td>{{p.societeLivraison}}</td>
+                                <td>{{p.colisImprimer}}</td>
+                                <td>{{p.colisPayer}}</td>
+                                <td>{{p.retour}}</td>
+                                <td>{{p.pourcentageRetour}}</td>
+                                <td>{{p.com}}</td>
+                                <td>{{p.coutAchat}}</td>
+                                <!-- <td><span class="status inProgress">En cours</span></td>
+                                <td><span class="status delivered">Livré</span></td>
+                                <td><span class="status pending">en attente</span></td>
+                                <td><span class="status return">Retour</span></td> -->
+                                <td>
+                                    <button type="button" class="btn1" (click)="showPopupUpd(p)">modifier</button><br>
+                                    <button type="button" class="btn2" (click)="showPopup(p)" disabled>supprimer</button><br>
+                                    <button type="button" class="btn4" (click)="showPopupPlus(p)">plus</button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- popup delete -->
+<div class="popupDel" #popupDel>
+    <div class="popup-content">
+        <form>
+            <h1>êtes-vous sûr de vouloir supprimer cette Ligne !</h1><br><br>
+            <img src="assets\75519.png" alt="" class="close" (click)="hidePopup()">
+            <a class="button22" (click)="deleteRequestAppoint()">supprimer</a>
+            <a class="button2" (click)="hidePopup()">annuler</a>
+        </form>
+    </div>
+</div>
+
+    <!-- popup create -->       
+    <div class="popupCrea" #popupCrea>
+        <div class="popup-contentCrea">
+            <form #productForm="ngForm" (ngSubmit)="getProducts(productForm.value)">           
+                <h1>AJOUTER UNE LIGNE</h1><br>
+                <input type="date" name="mois" placeholder="date" ngModel><br>
+                <!-- <input type="text" name="produit" placeholder="nom du produit" ngModel><br> -->
+                <input type="number" name="colisImprimer" placeholder="colis imprimé" ngModel><br>
+                <input type="number" name="colisPayer" placeholder="colis payé" ngModel><br>
+                <input type="number" name="retour" placeholder="retour" ngModel><br>
+                <input type="number" name="com" placeholder="com" ngModel><br>
+                <input type="number" name="coutAchat" placeholder="cout dachat" ngModel><br>
+                <label for="">Livreur</label>
+                <select name="societeLivraison" ngModel>
+                    <option>selectionner</option>
+                    <option>amir</option>
+                    <option>droppex</option>
+                    <option>autre</option>
+                </select>
+                    
+                <label for="">Caisse</label>
+                <select name="productName" ngModel>
+                    <option>selectionner</option>
+                    <option *ngFor="let a of myThirdProd" >{{ a?.productName }}</option>
+                </select>
+
+                <label for="">Produit detaille</label>
+                <select name="nomArticle" ngModel>
+                    <option>selectionner</option>
+                    <option *ngFor="let a of mySecondProd" >{{ a?.nomArticle  }}</option>
+                </select>
+                <img src="assets\75519.png" alt="" class="closeCrea" (click)="hidePopupCrea()">
+                <br>
+                <button class="button2Crea" type="submit">VALIDER</button>
+                <a class="button2Crea" (click)="hidePopupCrea()">ANNULER</a>
+            </form>
+        </div>
+    </div>
+
+
+        <!-- popup update -->
+        <div class="popupUpd" #popupUpd>
+            <div class="popup-contentUpd">
+                <form #productUptForm="ngForm" (ngSubmit)="getProdUpt(productUptForm.value)">
+                    <h1>MODIFIER UNE LIGNE</h1><br>
+                <input name="idProduit" type="number" placeholder="id" ngModel style="pointer-events: none;background-color: #f0f0f0;"><br>
+                <input name="mois" type="date" placeholder="date" ngModel><br>
+                <input name="colisImprimer" type="number" placeholder="colis imprimé" ngModel><br>
+                <input name="colisPayer" type="number" placeholder="colis payé" ngModel><br>
+                <input name="retour" type="number" placeholder="retour" ngModel><br>
+                <input name="com" type="number" placeholder="com" ngModel><br>
+                <input name="coutAchat" type="number" placeholder="cout dachat" ngModel><br>
+                <label for="">Livreur</label>
+                <select name="societeLivraison" ngModel>
+                    <option>selectionner</option>
+                    <option  *ngFor="let i of myProd" >{{ i?.societeLivraison }}</option>
+                </select>
+                    
+                <label for="">Caisse</label>
+                <select name="productName" ngModel>
+                    <option>selectionner</option>
+                    <option *ngFor="let a of myThirdProd" >{{ a?.productName }}</option>
+                </select>
+
+                <label for="">Produit detaille</label>
+                <select name="nomArticle" ngModel>
+                    <option>selectionner</option>
+                    <option *ngFor="let a of mySecondProd" >{{ a?.nomArticle  }}</option>
+                </select>
+                    <img src="assets\75519.png" alt="" class="closeUpd" (click)="hidePopupUpd()">
+                    <br>
+                    <button class="button2Crea" type="submit">VALIDER</button>
+                    <a class="button2Upd" (click)="hidePopupUpd()">Annuler</a>
+                </form>
+            </div>
+        </div>
+
+        <!-- popup show plus data -->
+        <div class="popupPlus" #popupPlus>
+            <div class="popup-contentPlus">
+              <h1 style="color: #00215b;">PLUS DE DETAILLE</h1><br>
+              <h5 style="color: red;">TOUT LES PRIX SONT EN DINARS</h5><br>
+              <caption style="float: left;color: #00215b;">INFO PRODUIT GLOBALE</caption>
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th style="background-color: #fff7b7;color: #00215b;">ID PRODUIT</th>
+                    <th>Date</th>
+                    <th>Article</th>
+                    <th>Livreur</th>
+                    <th>Colis imprimé</th>
+                    <th>Colis payé</th>
+                    <th>Retour</th>
+                    <th>% Retour</th>
+                    <th>Com</th>
+                    <th>Coût d'achat</th>
+                    <th>Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ obj?.idProduit }}</td>
+                        <td>{{ obj?.mois }}</td>
+                        <td>{{ obj?.produitDetail?.nomArticle }}</td>
+                        <td>{{ obj?.societeLivraison }}</td>
+                        <td>{{ obj?.colisImprimer }}</td>
+                        <td>{{ obj?.colisPayer }}</td>
+                        <td>{{ obj?.retour }}</td>
+                        <td>{{ obj?.pourcentageRetour }}</td>
+                        <td>{{ obj?.com }}</td>
+                        <td>{{ obj?.coutAchat }}</td>
+                        <td>{{ obj?.revenue }}</td>
+                    </tr>
+                </tbody>
+              </table>
+              <caption style="float: left;color: #00215b;">INFO PRODUIT UNITAIRE</caption>
+                <table class="custom-table">
+                 <thead>
+                   <tr>
+
+                    <th style="background-color: #fff7b7;color: #00215b;">ID PRODUIT DETAILLE</th>
+                    <th>Cout d'achat unitaire</th>
+                    <th>Cout Livraison</th>
+                    <th>Cout Unitaire Com</th>
+                    <th>Prix Sans Livraison</th>
+                    <th>Prix Vente</th>
+                    <th>Revenue Unitaire</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                      <td>{{ obj?.produitDetail?.idProdDetail }}</td>
+                      <td>{{ obj?.produitDetail?.coutAchatUnitaire }}</td>
+                      <td>{{ obj?.produitDetail?.coutLivraison }}</td>
+                      <td>{{ obj?.produitDetail?.coutUnitaireCom }}</td>
+                      <td>{{ obj?.produitDetail?.prixSansLivraison }}</td>
+                      <td>{{ obj?.produitDetail?.prixVente }}</td>
+                      <td>{{ obj?.produitDetail?.revenueUnitaire }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <caption style="float: left;color: #00215b;">INFO CAISSE</caption>
+                <table class="custom-table">
+                    <thead>
+                      <tr>
+                       <th style="background-color: #fff7b7;color: #00215b;">ID CAISSE</th>
+                       <th>Article</th>
+                       <th>Revenue Totale</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                       <tr>
+                         <td>{{ obj?.caisse?.idCaisse }}</td>
+                         <td>{{ obj?.caisse?.productName }}</td>
+                         <td>{{ obj?.caisse?.revenueTotale }}</td>
+                       </tr>
+                     </tbody>
+                   </table>
+                <br><br><br>
+                <img src="assets\75519.png" alt="" class="closePlus" (click)="hidePopupPlus()">
+                <a class="custom-button" (click)="hidePopupPlus()">ANNULER</a>
+              </div>
+            </div>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
